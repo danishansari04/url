@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video Player</title>
+<link rel="stylesheet" href="https://cdn.plyr.io/3.6.4/plyr.css">
+</head>
+<body>
+  <input type="url" id="videoUrlInput" placeholder="Enter video URL" required>
+  <button onclick="setVideoUrl()">Set Video URL</button>
+
+  <video id="videoPlayer" controls autoplay>
+    Your browser does not support the video tag.
+  </video>
+
+  <script src="https://cdn.plyr.io/3.6.4/plyr.js"></script>
+  <script>
+    function setVideoUrl() {
+      const videoUrl = document.getElementById('videoUrlInput').value;
+      if (videoUrl) {
+        const player = new Plyr('#videoPlayer', {
+          controls: ['play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'],
+        });
+        const source = {
+          type: 'video',
+          sources: [
+            {
+              src: videoUrl,
+              type: 'video/mp4',
+            },
+          ],
+        };
+        player.source = source;
+
+        // Update the URL with the video URL in the query parameter format
+        const urlParams = new URLSearchParams(window.location.search);
+        urlParams.set('video', videoUrl);
+        history.replaceState(null, '', window.location.pathname + '?' + urlParams.toString());
+
+        document.getElementById('videoUrlInput').style.display = 'none'; // Hide input tag after setting URL
+        document.querySelector('button').style.display = 'none'; // Hide button after setting URL
+
+        // Request full screen
+        if (player.fullscreen.enabled) {
+          player.fullscreen.enter();
+        }
+      } else {
+        console.error('No video URL provided.');
+      }
+    }
+
+    window.onload = function() {
+      // Get the video URL from the query parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      const videoUrl = urlParams.get('video');
+
+      // Set the video source if a valid URL is provided
+      if (videoUrl) {
+        const player = new Plyr('#videoPlayer', {
+          controls: ['play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'],
+        });
+        const source = {
+          type: 'video',
+          sources: [
+            {
+              src: videoUrl,
+              type: 'video/mp4',
+            },
+          ],
+        };
+        player.source = source;
+
+        document.getElementById('videoUrlInput').style.display = 'none'; // Hide input tag if URL provided
+        document.querySelector('button').style.display = 'none'; // Hide button if URL provided
+
+        // Request full screen
+        if (player.fullscreen.enabled) {
+          player.fullscreen.enter();
+        }
+      } else {
+        console.error('No video URL provided in the query parameter.');
+      }
+    };
+  </script>
+</body>
+</html>
