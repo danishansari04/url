@@ -6,10 +6,10 @@
 <title>Video Player</title>
 <link rel="stylesheet" href="https://cdn.plyr.io/3.6.4/plyr.css">
 <style>
-body {
-  margin: 0px;
-  padding: 0px;
-}
+  body {
+    margin: 0px;
+    padding: 0px;
+  }
   #videoPlayer {
     width: 100%;
     height: 100%;
@@ -54,10 +54,13 @@ body {
         document.getElementById('videoUrlInput').style.display = 'none'; // Hide input tag after setting URL
         document.querySelector('button').style.display = 'none'; // Hide button after setting URL
 
-        // Request full screen
-        if (player.fullscreen.enabled) {
-          player.fullscreen.enter();
-        }
+        // Request full screen after 5 seconds
+        setTimeout(function() {
+          const fullscreenButton = player.elements.buttons.fullscreen;
+          if (fullscreenButton) {
+            fullscreenButton.click();
+          }
+        }, 5000);
       } else {
         console.error('No video URL provided.');
       }
@@ -88,10 +91,13 @@ body {
         document.getElementById('videoUrlInput').style.display = 'none'; // Hide input tag if URL provided
         document.querySelector('button').style.display = 'none'; // Hide button if URL provided
 
-        // Request full screen
-        if (player.fullscreen.enabled) {
-          player.fullscreen.enter();
-        }
+        // Request full screen after 5 seconds
+        setTimeout(function() {
+          const fullscreenButton = player.elements.buttons.fullscreen;
+          if (fullscreenButton) {
+            fullscreenButton.click();
+          }
+        }, 5000);
       } else {
         console.error('No video URL provided in the query parameter.');
       }
