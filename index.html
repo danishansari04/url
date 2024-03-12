@@ -66,13 +66,14 @@
         document.getElementById('videoUrlInput').style.display = 'none'; // Hide input tag after setting URL
         document.querySelector('button').style.display = 'none'; // Hide button after setting URL
 
-        // Request full screen after 5 seconds
-        setTimeout(function() {
+        // Prompt user for fullscreen upon setting video URL
+        const fullscreenConfirmed = confirm("Do you want to view the video in fullscreen?");
+        if (fullscreenConfirmed) {
           const fullscreenButton = player.elements.buttons.fullscreen;
           if (fullscreenButton) {
             fullscreenButton.click();
           }
-        }, 5000);
+        }
       } else {
         console.error('No video URL provided.');
       }
@@ -103,13 +104,14 @@
         document.getElementById('videoUrlInput').style.display = 'none'; // Hide input tag if URL provided
         document.querySelector('button').style.display = 'none'; // Hide button if URL provided
 
-        // Request full screen after 5 seconds
-        setTimeout(function() {
+        // Prompt user for fullscreen upon setting video URL
+        const fullscreenConfirmed = confirm("Do you want to view the video in fullscreen?");
+        if (fullscreenConfirmed) {
           const fullscreenButton = player.elements.buttons.fullscreen;
           if (fullscreenButton) {
             fullscreenButton.click();
           }
-        }, 1000);
+        }
       } else {
         console.error('No video URL provided in the query parameter.');
       }
