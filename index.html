@@ -7,8 +7,8 @@
 <link href="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.css" rel="stylesheet">
 <style>
   body {
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
   }
   #videoPlayer {
     width: 100%;
@@ -32,14 +32,17 @@
       const videoUrl = document.getElementById('videoUrlInput').value;
       if (videoUrl) {
         const player = fluidPlayer('videoPlayer', {
-            layoutControls: {
-                fillToContainer: true,
-                primaryColor: "#ff0000",
-                posterImage: "" // optional
-            }
+          layoutControls: {
+            fillToContainer: true,
+            primaryColor: "#ff0000",
+            posterImage: "" // optional
+          }
         });
 
-        player.src = videoUrl;
+        player.src = {
+          src: videoUrl,
+          type: 'video/mp4'
+        };
 
         const urlParams = new URLSearchParams(window.location.search);
         urlParams.set('video', videoUrl);
@@ -47,11 +50,6 @@
 
         document.getElementById('videoUrlInput').style.display = 'none';
         document.querySelector('button').style.display = 'none';
-
-        const fullscreenConfirmed = confirm("Do you want to view the video in fullscreen?");
-        if (fullscreenConfirmed) {
-            player.fullscreen.enter();
-        }
       } else {
         console.error('No video URL provided.');
       }
@@ -63,22 +61,20 @@
 
       if (videoUrl) {
         const player = fluidPlayer('videoPlayer', {
-            layoutControls: {
-                fillToContainer: true,
-                primaryColor: "#ff0000",
-                posterImage: "" // optional
-            }
+          layoutControls: {
+            fillToContainer: true,
+            primaryColor: "#ff0000",
+            posterImage: "" // optional
+          }
         });
 
-        player.src = videoUrl;
+        player.src = {
+          src: videoUrl,
+          type: 'video/mp4'
+        };
 
         document.getElementById('videoUrlInput').style.display = 'none';
         document.querySelector('button').style.display = 'none';
-
-        const fullscreenConfirmed = confirm("Do you want to view the video in fullscreen?");
-        if (fullscreenConfirmed) {
-            player.fullscreen.enter();
-        }
       } else {
         console.error('No video URL provided in the query parameter.');
       }
