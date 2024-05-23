@@ -39,10 +39,7 @@
           }
         });
 
-        player.src = {
-          src: videoUrl,
-          type: 'video/mp4'
-        };
+        player.src = videoUrl;
 
         const urlParams = new URLSearchParams(window.location.search);
         urlParams.set('video', videoUrl);
@@ -68,10 +65,7 @@
           }
         });
 
-        player.src = {
-          src: videoUrl,
-          type: 'video/mp4'
-        };
+        player.src = videoUrl;
 
         document.getElementById('videoUrlInput').style.display = 'none';
         document.querySelector('button').style.display = 'none';
