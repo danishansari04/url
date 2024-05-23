@@ -1,78 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Video Player</title>
-<link href="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.css" rel="stylesheet">
-<style>
-  body {
-    margin: 0;
-    padding: 0;
-  }
-  #videoPlayer {
-    width: 100%;
-    height: 100%;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fluid Video Player</title>
+    <link href="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.css" rel="stylesheet"> <!-- Link to external Fluid Player CSS file -->
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+        .video-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+
+        }
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        #input-wrapper {
+            display: block;
+        }
+    </style>
 </head>
 <body>
-  <input type="url" id="videoUrlInput" placeholder="Enter video URL" required>
-  <button onclick="setVideoUrl()">Set Video URL</button>
+    <div id="input-wrapper">
+        <input type="text" id="video-link" placeholder="Enter video link...">
+        <button onclick="loadVideo()">Load Video</button>
+    </div>
+    <div class="video-container" id="video-container" style="display: none;">
+        <video id="my-video" class="video-player" controls>
+            <!-- Video source will be added dynamically -->
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    <script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script> <!-- Link to external Fluid Player JavaScript file -->
+    <script>
+        function loadVideo() {
+            var videoLink = document.getElementById('video-link').value;
+            var videoContainer = document.getElementById('video-container');
+            var inputWrapper = document.getElementById('input-wrapper');
 
-  <div id="playerContainer">
-    <video id="videoPlayer" controls>
-      Your browser does not support the video tag.
-    </video>
-  </div>
+            // Check if the video link is provided
+            if (videoLink.trim() !== '') {
+                // Hide input wrapper
+                inputWrapper.style.display = 'none';
 
-  <script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
-  <script>
-    function setVideoUrl() {
-      const videoUrl = document.getElementById('videoUrlInput').value;
-      if (videoUrl) {
-        const player = fluidPlayer('videoPlayer', {
-          layoutControls: {
-            fillToContainer: true,
-            primaryColor: "#ff0000",
-            posterImage: "" // optional
-          }
-        });
+                // Show video container
+                videoContainer.style.display = 'block';
 
-        player.src = videoUrl;
+                // Load video
+                var videoPlayer = fluidPlayer('my-video', {
+                    layoutControls: {
+                        primaryColor: '#000000',
+                        posterImage: ''
+                    },
+                    vastOptions: {
+                        adList: []
+                    }
+                });
 
-        const urlParams = new URLSearchParams(window.location.search);
-        urlParams.set('video', videoUrl);
-        history.replaceState(null, '', window.location.pathname + '?' + urlParams.toString());
-
-        document.getElementById('videoUrlInput').style.display = 'none';
-        document.querySelector('button').style.display = 'none';
-      } else {
-        console.error('No video URL provided.');
-      }
-    }
-
-    window.onload = function () {
-      const urlParams = new URLSearchParams(window.location.search);
-      const videoUrl = urlParams.get('video');
-
-      if (videoUrl) {
-        const player = fluidPlayer('videoPlayer', {
-          layoutControls: {
-            fillToContainer: true,
-            primaryColor: "#ff0000",
-            posterImage: "" // optional
-          }
-        });
-
-        player.src = videoUrl;
-
-        document.getElementById('videoUrlInput').style.display = 'none';
-        document.querySelector('button').style.display = 'none';
-      } else {
-        console.error('No video URL provided in the query parameter.');
-      }
-    };
-  </script>
+                // Set video source
+                var videoElement = document.getElementById('my-video');
+                videoElement.src = videoLink;
+            }
+        }
+    </script>
 </body>
 </html>
